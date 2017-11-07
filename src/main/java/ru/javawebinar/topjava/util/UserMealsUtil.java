@@ -36,21 +36,20 @@ public class UserMealsUtil {
             return Collections.emptyList();
         }
 
-        List<UserMealWithExceed> userMealWithExceeds = new ArrayList<>();
-        Map<LocalDate, Integer> dailyCalories = new HashMap<>();
-        for (UserMeal meal : mealList) {
-            LocalDate currentDay = meal.getDateTime().toLocalDate();
-            dailyCalories.computeIfPresent(currentDay, (localDate, sumCalories) -> sumCalories + meal.getCalories());
-            dailyCalories.computeIfAbsent(currentDay, localDate -> meal.getCalories());
-        }
+        Map<LocalDate, Integer> dailyCalories = mealList
+                .stream()
+                .reduce(new HashMap<>(),
+                        (localDateIntegerMap, meal) -> {
+                            localDateIntegerMap.computeIfPresent(meal.getDateTime().toLocalDate(), (localDate, sumCalories) -> sumCalories + meal.getCalories());
+                            localDateIntegerMap.computeIfAbsent(meal.getDateTime().toLocalDate(), localDate -> meal.getCalories());
+                            return localDateIntegerMap;
+                        },
+                        (BinaryOperator<Map<LocalDate, Integer>>) (localDateIntegerMap, localDateIntegerMap2) -> localDateIntegerMap);
 
-        for (UserMeal meal : mealList) {
-            LocalTime currentTime = meal.getDateTime().toLocalTime();
-            if (currentTime.isAfter(startTime) && currentTime.isBefore(endTime)) {
-                boolean isCurrentDayExceeded = dailyCalories.get(meal.getDateTime().toLocalDate()) > caloriesPerDay;
-                userMealWithExceeds.add(new UserMealWithExceed(meal.getDateTime(), meal.getDescription(), meal.getCalories(), isCurrentDayExceeded));
-            }
-        }
-        return userMealWithExceeds;
+        return mealList
+                .stream()
+                .filter(meal -> meal.getDateTime().toLocalTime().isAfter(startTime) && meal.getDateTime().toLocalTime().isBefore(endTime))
+                .map(meal -> new UserMealWithExceed(meal, dailyCalories.get(meal.getDateTime().toLocalDate()) > caloriesPerDay))
+                .collect(Collectors.toList());
     }
 }
