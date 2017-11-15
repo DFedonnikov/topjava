@@ -14,6 +14,18 @@
         .exceeded {
             color: red;
         }
+        .mealTable {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
     </style>
 </head>
 <body>
@@ -22,7 +34,7 @@
     <h2>Meals</h2>
     <a href="meals?action=create">Add Meal</a>
     <hr/>
-    <table border="1" cellpadding="8" cellspacing="0">
+    <table class="mealTable">
         <thead>
         <tr>
             <th>Date</th>
