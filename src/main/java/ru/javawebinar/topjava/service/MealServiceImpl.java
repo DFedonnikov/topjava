@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +21,11 @@ public class MealServiceImpl implements MealService {
     @Override
     public List<Meal> getAll() {
         return new ArrayList<>(repository.getAll());
+    }
+
+    @Override
+    public List<Meal> getAllFiltered(LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime) {
+        return repository.getAllFiltered(startDate, endDate, startTime, endTime);
     }
 
     @Override
