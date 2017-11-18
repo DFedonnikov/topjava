@@ -18,4 +18,8 @@ public class ProfileRestController extends AbstractUserController {
     public void update(User user) {
         super.update(user, AuthorizedUser.id());
     }
+
+    public void login(String userId) {
+        AuthorizedUser.setUserId(Integer.parseInt(userId));
+    }
 }
