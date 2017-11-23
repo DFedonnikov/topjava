@@ -2,6 +2,7 @@ package ru.javawebinar.topjava;
 
 import ru.javawebinar.topjava.model.Meal;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -19,6 +20,12 @@ public class MealTestData {
     public static final int USER_MEAL_3_ID = START_SEQ + 7;
 
     public static final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+    public static final LocalDate dateStart = LocalDate.of(2017, 11, 23);
+    public static final LocalDate dateEnd = LocalDate.of(2017, 11, 23);
+
+    public static final LocalDateTime dateTimeStart = LocalDateTime.of(2017, 11, 22, 10, 15);
+    public static final LocalDateTime dateTimeEnd = LocalDateTime.of(2017, 11, 23, 18, 45);
 
     public static final Meal ADMIN_MEAL_1 = new Meal(ADMIN_MEAL_1_ID, LocalDateTime.parse("22/11/2017 10:22", dateFormat), "Admin meal_1", 500);
     public static final Meal ADMIN_MEAL_2 = new Meal(ADMIN_MEAL_2_ID, LocalDateTime.parse("23/11/2017 18:26", dateFormat), "Admin meal_2", 500);
