@@ -13,6 +13,7 @@ import javax.annotation.PreDestroy;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -20,6 +21,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static ru.javawebinar.topjava.MealTestData.*;
+import static ru.javawebinar.topjava.MealTestData.USER_MEAL_3;
+import static ru.javawebinar.topjava.MealTestData.USER_MEAL_3_ID;
 import static ru.javawebinar.topjava.UserTestData.ADMIN_ID;
 import static ru.javawebinar.topjava.UserTestData.USER_ID;
 
@@ -29,13 +33,19 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
 
     // Map  userId -> (mealId-> meal)
     private Map<Integer, Map<Integer, Meal>> repository = new ConcurrentHashMap<>();
-    private AtomicInteger counter = new AtomicInteger(0);
+    private AtomicInteger counter = new AtomicInteger(100007);
 
-    {
-        MealsUtil.MEALS.forEach(meal -> save(meal, USER_ID));
-
-        save(new Meal(LocalDateTime.of(2015, Month.JUNE, 1, 14, 0), "Админ ланч", 510), ADMIN_ID);
-        save(new Meal(LocalDateTime.of(2015, Month.JUNE, 1, 21, 0), "Админ ужин", 1500), ADMIN_ID);
+    public void init() {
+        Map<Integer, Meal> adminMeals = new HashMap<>();
+        adminMeals.put(ADMIN_MEAL_1_ID, ADMIN_MEAL_1);
+        adminMeals.put(ADMIN_MEAL_2_ID, ADMIN_MEAL_2);
+        adminMeals.put(ADMIN_MEAL_3_ID, ADMIN_MEAL_3);
+        Map<Integer, Meal> userMeals = new HashMap<>();
+        userMeals.put(USER_MEAL_1_ID, USER_MEAL_1);
+        userMeals.put(USER_MEAL_2_ID, USER_MEAL_2);
+        userMeals.put(USER_MEAL_3_ID, USER_MEAL_3);
+        repository.put(ADMIN_ID, adminMeals);
+        repository.put(USER_ID, userMeals);
     }
 
 
