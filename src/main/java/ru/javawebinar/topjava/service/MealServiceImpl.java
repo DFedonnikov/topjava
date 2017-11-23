@@ -17,7 +17,7 @@ public class MealServiceImpl implements MealService {
     private final MealRepository repository;
 
     @Autowired
-    public MealServiceImpl(@Qualifier("jdbcMealRepositoryImpl") MealRepository repository) {
+    public MealServiceImpl(MealRepository repository) {
         this.repository = repository;
     }
 
