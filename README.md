@@ -1,4 +1,5 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/c54efd2f8bc04e31bb1626c9eb3454e9)](https://www.codacy.com/app/DFedonnikov/topjava?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=DFedonnikov/topjava&amp;utm_campaign=Badge_Grade)
+[![VersionEye](https://www.versioneye.com/user/projects/5a1bbe900fb24f0c43eaf675/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/5a1bbe900fb24f0c43eaf675)
 
 Java Enterprise Online Project 
 ===============================
