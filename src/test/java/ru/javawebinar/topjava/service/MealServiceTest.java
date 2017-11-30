@@ -1,6 +1,10 @@
 package ru.javawebinar.topjava.service;
 
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.junit.rules.ExternalResource;
 import org.junit.runner.RunWith;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import ru.javawebinar.topjava.JUnitStopWatch;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
@@ -30,6 +35,20 @@ public class MealServiceTest {
         SLF4JBridgeHandler.install();
     }
 
+    @Rule
+    public JUnitStopWatch stopWatch = new JUnitStopWatch();
+
+    @ClassRule
+    public static final ExternalResource resource = new ExternalResource() {
+        @Override
+        protected void after() {
+            JUnitStopWatch.getReport().forEach(JUnitStopWatch.getLOG()::info);
+        }
+    };
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
     @Autowired
     private MealService service;
 
@@ -42,6 +61,7 @@ public class MealServiceTest {
     @Test(expected = NotFoundException.class)
     public void testDeleteNotFound() throws Exception {
         service.delete(MEAL1_ID, 1);
+        thrown.expect(NotFoundException.class);
     }
 
     @Test
@@ -60,6 +80,7 @@ public class MealServiceTest {
     @Test(expected = NotFoundException.class)
     public void testGetNotFound() throws Exception {
         service.get(MEAL1_ID, ADMIN_ID);
+        thrown.expect(NotFoundException.class);
     }
 
     @Test
@@ -72,6 +93,7 @@ public class MealServiceTest {
     @Test(expected = NotFoundException.class)
     public void testUpdateNotFound() throws Exception {
         service.update(MEAL1, ADMIN_ID);
+        thrown.expect(NotFoundException.class);
     }
 
     @Test
